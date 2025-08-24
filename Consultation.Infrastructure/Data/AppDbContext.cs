@@ -5,9 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Consultation.Infrastructure.Data
 {
@@ -24,14 +27,29 @@ namespace Consultation.Infrastructure.Data
               
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //Connection to Local SQL Server Database
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;" +
+            //Connection to Azure SQL Server Database
+            optionsBuilder.UseSqlServer("Server=tcp:consultationserver.database.windows.net,1433;" +
                 "Initial Catalog=ConsultationDatabase;" +
-                "Integrated Security=True;Connect Timeout=30;" +
-                "Encrypt=False;Trust Server Certificate=False;" +
-                "Application Intent=ReadWrite;Multi Subnet Failover=False");
+                "Persist Security Info=False;" +
+                "User ID=ConsultationDB;" +
+                "Password=MyServerAdmin123!;" +
+                "MultipleActiveResultSets=False;" +
+                "Encrypt=True;" +
+                "TrustServerCertificate=False;" +
+                "Connection Timeout=30;");
 
-           optionsBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+            ////Connection to Local Server Database
+            //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB; " +
+            //    "Initial Catalog = ConsultationDatabase; " +
+            //    "Integrated Security = True; " +
+            //    "Connect Timeout = 30; " +
+            //    "Encrypt = False; " +
+            //    "Trust Server Certificate = False; " +
+            //    "Application Intent = ReadWrite; " +
+            //    "Multi Subnet Failover = False");
+
+
+            optionsBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -47,7 +65,8 @@ namespace Consultation.Infrastructure.Data
             builder.Entity<Faculty>().HasData(DatabaseSeederInfo.FacultyDataList());
             builder.Entity<Admin>().HasData(DatabaseSeederInfo.AdminDataList());
             builder.Entity<ConsultationRequest>().HasData(DatabaseSeederInfo.ConsultationRequestDataList());
-       
+            builder.Entity<FacultySchedule>().HasData(DatabaseSeederInfo.FacultyScheduleSeeder());
+            builder.Entity<Notification>().HasData(DatabaseSeederInfo.NotificationSeeder());
         }
 
         public DbSet<ActionLog> ActionLog { get; set; }

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Consultation.Domain.Enum;
 using System.ComponentModel.DataAnnotations.Schema;
+using Enum;
 
 namespace Consultation.Infrastructure.Data
 {
@@ -89,7 +90,7 @@ namespace Consultation.Infrastructure.Data
         }
 
         public static Student StudentSeeder(int id,string studentUMID,string studentName,string email,
-            int programID,int schoolYear,string userID)
+            int programID,int schoolYear,string userID,YearLevel yearlevel)
         {
             var students = new Student
             {
@@ -99,7 +100,8 @@ namespace Consultation.Infrastructure.Data
                 StudentUMID = studentUMID,
                 ProgramID = programID,
                 SchoolYearID = schoolYear,
-                UsersID = userID
+                UsersID = userID,
+                yearLevel = yearlevel
             };
 
             return students;
@@ -131,8 +133,6 @@ namespace Consultation.Infrastructure.Data
             return admin;
         }
 
-
-
         public static ConsultationRequest ConsultationRequestSeeder(int ConsultationID,DateTime DateRequested,DateTime DateSchedule, TimeOnly StartedTime,
             TimeOnly EndedTime, string Concern, string? DisapprovedReason, string SubjectCode, Status Status, 
             string programName,int StudentID, int FacultyID)
@@ -153,6 +153,48 @@ namespace Consultation.Infrastructure.Data
                 ProgramName = programName
             };          
         return ConsultationRequest;
+        }
+
+        public static FacultySchedule FacultyScheduleSeeder(int FacultyScheduleID, TimeOnly timeStart, TimeOnly timeEnd,
+           DaysOfWeek days, int facultyID)
+        {
+            var facultySchedule = new FacultySchedule
+            {
+                FacultyScheduleID = FacultyScheduleID,
+                TimeStart = timeStart,
+                TimeEnd = timeEnd,
+                Day = days,
+                FacultyID = facultyID,
+            };
+            return facultySchedule;
+        }
+
+        public static Notification NotificationSeeder(int messageNumber,string message,NotificationType 
+            notificationType)
+        {
+            var notification = new Notification
+            {
+                NotificationNumber = messageNumber,
+                NotificationMessage = message,
+                NotificationType = notificationType
+            };
+            return notification;
+        }
+
+        public static Bulletin BulletinSeeder(int BulletinID,string title,string author,BulletinStatus bulletinStatus,
+            DateTime datePublished,int filecount,bool isArchived)
+        {
+            var bulletin = new Bulletin
+            {
+                BulletinID = BulletinID,
+                Title = title,
+                Author = author,
+                Status = bulletinStatus,
+                DatePublished = datePublished,
+                FileCount = filecount,
+                IsArchived = isArchived
+            };
+            return bulletin;
         }
     }
 }

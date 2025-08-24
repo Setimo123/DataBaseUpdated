@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,8 +20,10 @@ namespace Consultation.Domain
         
         public string Email { get; set; }
 
+        public YearLevel yearLevel { get; set; }
+
         //student to program is one-to-one relationship
-        
+
         [ForeignKey(nameof(ProgramID))]
         public int ProgramID { get; set; }
         public virtual Program Program { get; set; }

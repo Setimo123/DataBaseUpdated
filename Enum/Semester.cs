@@ -9,10 +9,14 @@ namespace Consultation.Domain.Enum
 {
     public enum Semester
     {
-        //[Display(Name="First Semester")]
-        Semester1 =1, 
+        [Display(Name="First Semester")]
+        Semester1 =1,
+
+        [Display(Name = "Second Semester")]
         Semester2 = 2,
-        Summer = 3
+
+        [Display(Name = "Summer Semester")]
+        Summer = 3,
 
     }
 }

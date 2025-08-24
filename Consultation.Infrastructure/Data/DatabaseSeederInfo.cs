@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Enum;
 
 namespace Consultation.Infrastructure.Data
 {
@@ -95,9 +96,9 @@ namespace Consultation.Infrastructure.Data
             var students = new List<Student>
             {
                 DatabaseSeeder.StudentSeeder(1,"550200","Cedric Setimo","CedricSetimo.550200@umindanao.edu.ph",3,1,
-                "273F528F-5330-411F-9C6B-01543D6249C3"),
+                "273F528F-5330-411F-9C6B-01543D6249C3",YearLevel.Third_Year),
                  DatabaseSeeder.StudentSeeder(2,"547343","Ellaine Musni","EllaineMusni.550200@umindanao.edu.ph",3,1,
-                "D0B26692-E380-4374-985F-239B56D06C20"),
+                "D0B26692-E380-4374-985F-239B56D06C20",YearLevel.Third_Year),
             };
             return students;
         }
@@ -177,6 +178,48 @@ namespace Consultation.Infrastructure.Data
                 ),
             };
             return consultationRequest;
+        }
+
+        public static List<FacultySchedule> FacultyScheduleSeeder()
+        {
+            var faucltySchedule = new List<FacultySchedule>()
+            {
+            DatabaseSeeder.FacultyScheduleSeeder(1, new TimeOnly(15, 0), new TimeOnly(16, 0),DaysOfWeek.Monday,1),
+            DatabaseSeeder.FacultyScheduleSeeder(2, new TimeOnly(11, 0), new TimeOnly(12, 0),DaysOfWeek.Friday,2),
+            DatabaseSeeder.FacultyScheduleSeeder(3, new TimeOnly(14, 0), new TimeOnly(15, 0), DaysOfWeek.Tuesday, 1),
+            };
+            return faucltySchedule;
+        }
+
+        public static List<Notification> NotificationSeeder()
+        {
+            var notification = new List<Notification>()
+            {
+            DatabaseSeeder.NotificationSeeder(1, "Hello World",NotificationType.StudentNotification),
+            DatabaseSeeder.NotificationSeeder(2, "Hi World",NotificationType.AdminNotification),
+            DatabaseSeeder.NotificationSeeder(3, "Jiver Gwapo",NotificationType.StudentNotification),
+            };
+            return notification;
+        }
+
+        public static List<Bulletin> BulletinSeeder()
+        {
+            var notification = new List<Bulletin>()
+            {
+               DatabaseSeeder.BulletinSeeder(1, "Welcome Week Schedule", "Student Affairs",
+                     BulletinStatus.publish, new DateTime(2025, 8, 1), 2, false),
+
+              DatabaseSeeder.BulletinSeeder(2, "Maintenance Downtime", "IT",
+                    BulletinStatus.publish, new DateTime(2025, 8, 5), 1, false),
+
+              DatabaseSeeder.BulletinSeeder(3, "New Library Hours", "Library",
+                    BulletinStatus.pending, new DateTime(2025, 8, 7), 0, false),
+
+         DatabaseSeeder.BulletinSeeder(4, "Policy Archive", "Admin",
+                    BulletinStatus.pending, new DateTime(2024, 12, 1), 3, true),
+
+            };
+            return notification;
         }
     }
 }

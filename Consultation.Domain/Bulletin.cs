@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Enum;
 
 namespace Consultation.Domain
 {
@@ -16,14 +17,16 @@ namespace Consultation.Domain
 
         public string Title { get; set; }
 
-        public string Description { get; set; }
+        public string Author { get; set; }
 
-        public string ImageURL { get; set; }
+        public string Content { get; set; }
+
+        public BulletinStatus Status { get; set; }    
 
         public DateTime DatePublished { get; set; }
 
-        public int Priority { get; set; }
+        public int FileCount { get; set; }
 
-        public string Notify { get; set; }
+        public bool IsArchived { get; set; }
     }
 }
