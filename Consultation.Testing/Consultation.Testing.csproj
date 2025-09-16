@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Consoltation.Repository\Consultation.Repository.csproj" />
     <ProjectReference Include="..\Consoltation.Services\Consultation.Services.csproj" />
     <ProjectReference Include="..\Consultation.Domain\Consultation.Domain.csproj" />
