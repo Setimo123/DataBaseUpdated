@@ -10,6 +10,7 @@ namespace Consultation.Repository.Repository.IRepository
     public interface IAuthRepository
     {
         Task<Users?> GetUserByEmail(string email);
-        Task<Student> GetStudentInformation(string studentUMNumber);
+        Task<Student?> GetStudentInformation(string studentUMNumber);
+        Task<EnrolledCourse?> GetStudentEnrolledCourses(string CourseName);
     }
 }

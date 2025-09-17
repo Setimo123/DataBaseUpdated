@@ -23,18 +23,39 @@ namespace Consultation.Repository
             try
             {
                 var students = _context.Students
+                      .AsNoTracking()
+                       .AsSplitQuery()
                        .Include(s => s.SchoolYear)
-                       .ThenInclude(s => s.EnrolledCourses)
+                       .Include(s => s.EnrolledCourses)
+                       .ThenInclude(s => s.Faculty)
                        .Include(s => s.ConsultationRequests)
                        .Include(s => s.Program)
-                       .Where(s => s.StudentUMID == studentUMNumber)
-                       .FirstOrDefaultAsync();
-                return await students;
+                       .FirstOrDefaultAsync(s => s.StudentUMID == studentUMNumber);
+                return await students ?? new Student();
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Student Repository Error: {ex.Message}");
                 return new Student();
+            }
+
+        }
+
+
+        public async Task<EnrolledCourse?> GetStudentEnrolledCourses(string CourseName)
+        {
+            try
+            {
+                var enrolledCourses = _context.EnrolledCourse
+                      .AsNoTracking()
+                       .AsSplitQuery()
+                       .FirstOrDefaultAsync(s => s.CourseName == CourseName);
+                return await enrolledCourses ?? new EnrolledCourse();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Student Repository Error: {ex.Message}");
+                return new EnrolledCourse();
             }
 
         }

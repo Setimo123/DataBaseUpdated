@@ -51,6 +51,11 @@ namespace Consultation.Service
         public async Task<Student?> GetStudentInformation(string studentUMID)
         {
             return await _userRepository.GetStudentInformation(studentUMID);
-        }   
+        }
+
+        public async Task<EnrolledCourse?> GetStudentEnrolledCourses(string CourseName)
+        {
+            return await _userRepository.GetStudentEnrolledCourses(CourseName);
+        }
     }
 }

@@ -12,5 +12,7 @@ namespace Consultation.Service.IService
         Task<Users?> Login(string email, string password,string role);
 
         Task<Student?> GetStudentInformation(string studentUMID);
+
+        Task<EnrolledCourse?> GetStudentEnrolledCourses(string CourseName);
     }
 }

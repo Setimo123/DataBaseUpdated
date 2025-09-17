@@ -113,7 +113,7 @@ namespace Consultation.Service
         //For mobile display the number of the consultations
 
         private string message = "";
-        public async Task<List<ConsultationRequest>> GetStudentPendingList(string studentUMID,Status status)
+        public async Task<List<ConsultationRequest>> GetStudentPendingList(string studentUMID, Status status)
         {
             try
             {
@@ -138,6 +138,6 @@ namespace Consultation.Service
             }
         }
 
-      
+
     }
 }

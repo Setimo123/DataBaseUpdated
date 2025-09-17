@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Consultation.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250724051544_CreateDatabaseTable")]
-    partial class CreateDatabaseTable
+    [Migration("20250912195742_MyMigration")]
+    partial class MyMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,9 +21,9 @@ namespace Consultation.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "9.0.4")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
             modelBuilder.Entity("Consultation.Domain.ActionLog", b =>
                 {
@@ -31,20 +31,20 @@ namespace Consultation.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ActionLogID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ActionLogID"));
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<TimeOnly>("Time")
-                        .HasColumnType("time");
+                        .HasColumnType("time(6)");
 
                     b.Property<string>("UsersId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("ActionLogID");
 
@@ -59,15 +59,15 @@ namespace Consultation.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AdminID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("AdminID"));
 
                     b.Property<string>("AdminName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("UsersID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("AdminID");
 
@@ -96,29 +96,31 @@ namespace Consultation.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BulletinID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("BulletinID"));
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("DatePublished")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("FileCount")
+                        .HasColumnType("int");
 
-                    b.Property<string>("ImageURL")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("Notify")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Priority")
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("BulletinID");
 
@@ -132,29 +134,29 @@ namespace Consultation.Infrastructure.Migrations
 
                     b.Property<string>("Concern")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("DateRequested")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("DateSchedule")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("DisapprovedReason")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<TimeOnly>("EndedTime")
-                        .HasColumnType("time");
+                        .HasColumnType("time(6)");
 
                     b.Property<int>("FacultyID")
                         .HasColumnType("int");
 
                     b.Property<string>("ProgramName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<TimeOnly>("StartedTime")
-                        .HasColumnType("time");
+                        .HasColumnType("time(6)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -164,7 +166,7 @@ namespace Consultation.Infrastructure.Migrations
 
                     b.Property<string>("SubjectCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("ConsultationID");
 
@@ -226,15 +228,15 @@ namespace Consultation.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("DepartmentID"));
 
                     b.Property<string>("DepartmentName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("DepartmentID");
 
@@ -267,22 +269,22 @@ namespace Consultation.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EnrolledCourseID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("EnrolledCourseID"));
 
                     b.Property<string>("CourseCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("CourseName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("FacultyID")
                         .HasColumnType("int");
 
                     b.Property<string>("ProgramCourse")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("SchoolYearID")
                         .HasColumnType("int");
@@ -390,18 +392,18 @@ namespace Consultation.Infrastructure.Migrations
 
                     b.Property<string>("FacultyName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("FacultyUMID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("SchoolYearID")
                         .HasColumnType("int");
 
                     b.Property<string>("UsersID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("FacultyID");
 
@@ -436,7 +438,7 @@ namespace Consultation.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FacultyScheduleID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("FacultyScheduleID"));
 
                     b.Property<int>("Day")
                         .HasColumnType("int");
@@ -445,16 +447,82 @@ namespace Consultation.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<TimeOnly>("TimeEnd")
-                        .HasColumnType("time");
+                        .HasColumnType("time(6)");
 
                     b.Property<TimeOnly>("TimeStart")
-                        .HasColumnType("time");
+                        .HasColumnType("time(6)");
 
                     b.HasKey("FacultyScheduleID");
 
                     b.HasIndex("FacultyID");
 
                     b.ToTable("FacultySchedule");
+
+                    b.HasData(
+                        new
+                        {
+                            FacultyScheduleID = 1,
+                            Day = 1,
+                            FacultyID = 1,
+                            TimeEnd = new TimeOnly(16, 0, 0),
+                            TimeStart = new TimeOnly(15, 0, 0)
+                        },
+                        new
+                        {
+                            FacultyScheduleID = 2,
+                            Day = 5,
+                            FacultyID = 2,
+                            TimeEnd = new TimeOnly(12, 0, 0),
+                            TimeStart = new TimeOnly(11, 0, 0)
+                        },
+                        new
+                        {
+                            FacultyScheduleID = 3,
+                            Day = 2,
+                            FacultyID = 1,
+                            TimeEnd = new TimeOnly(15, 0, 0),
+                            TimeStart = new TimeOnly(14, 0, 0)
+                        });
+                });
+
+            modelBuilder.Entity("Consultation.Domain.Notification", b =>
+                {
+                    b.Property<int>("NotificationNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("NotificationNumber"));
+
+                    b.Property<string>("NotificationMessage")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("NotificationType")
+                        .HasColumnType("int");
+
+                    b.HasKey("NotificationNumber");
+
+                    b.ToTable("Notification");
+
+                    b.HasData(
+                        new
+                        {
+                            NotificationNumber = 1,
+                            NotificationMessage = "Hello World",
+                            NotificationType = 1
+                        },
+                        new
+                        {
+                            NotificationNumber = 2,
+                            NotificationMessage = "Hi World",
+                            NotificationType = 2
+                        },
+                        new
+                        {
+                            NotificationNumber = 3,
+                            NotificationMessage = "Jiver Gwapo",
+                            NotificationType = 1
+                        });
                 });
 
             modelBuilder.Entity("Consultation.Domain.Program", b =>
@@ -463,18 +531,18 @@ namespace Consultation.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProgramID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ProgramID"));
 
                     b.Property<int>("DepartmentID")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("ProgramName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("ProgramID");
 
@@ -526,7 +594,7 @@ namespace Consultation.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SchoolYearID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("SchoolYearID"));
 
                     b.Property<int>("SchoolYearStatus")
                         .HasColumnType("int");
@@ -536,11 +604,11 @@ namespace Consultation.Infrastructure.Migrations
 
                     b.Property<string>("Year1")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Year2")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("SchoolYearID");
 
@@ -580,7 +648,7 @@ namespace Consultation.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("ProgramID")
                         .HasColumnType("int");
@@ -590,15 +658,18 @@ namespace Consultation.Infrastructure.Migrations
 
                     b.Property<string>("StudentName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("StudentUMID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("UsersID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("yearLevel")
+                        .HasColumnType("int");
 
                     b.HasKey("StudentID");
 
@@ -619,7 +690,8 @@ namespace Consultation.Infrastructure.Migrations
                             SchoolYearID = 1,
                             StudentName = "Cedric Setimo",
                             StudentUMID = "550200",
-                            UsersID = "273F528F-5330-411F-9C6B-01543D6249C3"
+                            UsersID = "273F528F-5330-411F-9C6B-01543D6249C3",
+                            yearLevel = 3
                         },
                         new
                         {
@@ -629,65 +701,66 @@ namespace Consultation.Infrastructure.Migrations
                             SchoolYearID = 1,
                             StudentName = "Ellaine Musni",
                             StudentUMID = "547343",
-                            UsersID = "D0B26692-E380-4374-985F-239B56D06C20"
+                            UsersID = "D0B26692-E380-4374-985F-239B56D06C20",
+                            yearLevel = 3
                         });
                 });
 
             modelBuilder.Entity("Consultation.Domain.Users", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("varchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("UMID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("varchar(256)");
 
                     b.Property<int>("UserType")
                         .HasColumnType("int");
@@ -699,8 +772,7 @@ namespace Consultation.Infrastructure.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
 
@@ -715,7 +787,7 @@ namespace Consultation.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "CEDRICSETIMO.550200@UMINDANAO.EDU.PH",
                             NormalizedUserName = "CEDRIC SETIMO",
-                            PasswordHash = "AQAAAAIAAYagAAAAELvaSnIaY5T4jX4VHDJQWSrkgxaUNJZwTXvcsj1MtVHrSS5UbD9nS97lOV/DLZ4DHQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEE8vYk2i8x/iqVTs4PYbN4dclVsoe2xidJamu8vD9JbWA+Wfw7iPJtqMllHjQ0PJlQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "5a54c967-0b1f-4c38-bda7-5f94e4c1a3f4",
                             TwoFactorEnabled = false,
@@ -733,7 +805,7 @@ namespace Consultation.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "REYMATEO.550200@UMINDANAO.EDU.PH",
                             NormalizedUserName = "REY MATEO",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMcHj5emonJNto/90XwkzePiJbQ4FuNWX3LKFqDdsmGn/XXAZdRP6XUbX926dApmKw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEA9dlSFLvzkoMnM7WoCGVFne6Ttg9voto+OC5KQ7cnIdeL3DicfxTcEL4IE3gYtkfA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "5a54c967-0b1f-4c38-bda7-5f94e4c1a3f4",
                             TwoFactorEnabled = false,
@@ -751,7 +823,7 @@ namespace Consultation.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "RAINEISID.550200@UMINDANAO.EDU.PH",
                             NormalizedUserName = "RAINE ISID",
-                            PasswordHash = "AQAAAAIAAYagAAAAECHXe7Ktkuh8mcth7E7+c5hi3LJN4uuzEEXgaCF3oNLG3nJRlvyjX6v11mHCCcY9AQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBzabGQNVuFPPBYHiTEKmJusXVeALceGbzFREmj9rw+JWkRArd7GfGvVAQ1zNxuVxA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "5a54c967-0b1f-4c38-bda7-5f94e4c1a3f4",
                             TwoFactorEnabled = false,
@@ -769,7 +841,7 @@ namespace Consultation.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ELLAINEMUSNI.550200@UMINDANAO.EDU.PH",
                             NormalizedUserName = "ELLAINE MUSNI",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGHKGylFLpr13vh+CrxQqy3GvEqTM5ghSXaHUW/aX2qvZba9/fKZSi3j0vpSd2Urgw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFYJQbiiI31nQaAN/drgY6TZCuQgUPayOXtszzMcPAUtNMA/Ld4Ug1/rAut+W7si0Q==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "5a54c967-0b1f-4c38-bda7-5f94e4c1a3f4",
                             TwoFactorEnabled = false,
@@ -787,7 +859,7 @@ namespace Consultation.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "REGGIESOYLON.6850@UMINDANAO.EDU.PH",
                             NormalizedUserName = "REGGIE SOYLON",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIXHwLC5rbD+QFlhkiX3GegA/I3ie3XwzdpMdhf9joNmoY/uCMeNxUEcthsf98eMPw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMaIglD/XHrYxLKYmQLPlmk0aevGFEsy6OFLqdAvjbVLgERa9iG9XNx+yRS0VNCuxg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "5a54c967-0b1f-4c38-bda7-5f94e4c1a3f4",
                             TwoFactorEnabled = false,
@@ -805,7 +877,7 @@ namespace Consultation.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "CHELEYBALSOMO.8998@UMINDANAO.EDU.PH",
                             NormalizedUserName = "CHELEY BALSOMO",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAVAEqV72+ZFyAw1KDTEEraYAmTS9jt6b8CSqC44CS44TDv7gvLKHx9JTlO8LiqOjg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOWcmH2vp5+IyUYx4M/CJyezJavdqZWkvXOCAfI76gMGY3Z+qxORurOkDnDAO7geIw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "5a54c967-0b1f-4c38-bda7-5f94e4c1a3f4",
                             TwoFactorEnabled = false,
@@ -823,7 +895,7 @@ namespace Consultation.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JEANELLELABSAN.7971@UMINDANAO.EDU.PH",
                             NormalizedUserName = "JEANELLE LABSAN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKOeJ9TJ9KB+1HivDPurwV5z+anjdllysnP+IyhJhZx1xvTnavWVistDpUa4LAvr2Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEITSPjyOfeQunkZJ5/SM81OHXXwmVttRZ82k4AEvh5fdm01sF9cwMW7w1yqykD2Oqg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "5a54c967-0b1f-4c38-bda7-5f94e4c1a3f4",
                             TwoFactorEnabled = false,
@@ -841,7 +913,7 @@ namespace Consultation.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "CHRISTOPHERDESTAJO.9241@UMINDANAO.EDU.PH",
                             NormalizedUserName = "CHRISTOPHER DESTAJO",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGyX791QakurY+O+WT98ceyl0BpT3CicN5IFgfv+WB+v9LrUy69G3t8JaJ0vpA3Sjg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBoaL5oj3pynvQJMc4N1OPygC55576GYiM38L5cLQ4F7TRvDn4SAbqvcin1XyUaCpA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "5a54c967-0b1f-4c38-bda7-5f94e4c1a3f4",
                             TwoFactorEnabled = false,
@@ -859,7 +931,7 @@ namespace Consultation.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "JIVERDEJIGA.3210@UMINDANAO.EDU.PH",
                             NormalizedUserName = "JIVER DEJIGA",
-                            PasswordHash = "AQAAAAIAAYagAAAAELAfuOFr7lXT7OzfMW0kqIkniRpFzbj50gd72Lcz9Z4MDZfPYKa7UyDqCSferwvQMw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIV9CKxLFmMTxZhiKaUTchHYIpLNk2bAuPBlZ+tFSOCuKis6GDUjCExtWzI8j1SCWw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "5a54c967-0b1f-4c38-bda7-5f94e4c1a3f4",
                             TwoFactorEnabled = false,
@@ -872,26 +944,25 @@ namespace Consultation.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("varchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
                 });
@@ -902,17 +973,17 @@ namespace Consultation.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
@@ -927,17 +998,17 @@ namespace Consultation.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
@@ -949,17 +1020,17 @@ namespace Consultation.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -971,10 +1042,10 @@ namespace Consultation.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -986,16 +1057,16 @@ namespace Consultation.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
