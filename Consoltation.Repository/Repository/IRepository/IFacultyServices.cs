@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Consultation.Repository.Repository.IRepository
 {
-    public interface IAuthRepository
+    public interface IFacultyServices
     {
-        Task<Users?> GetUserByEmail(string email);
+        Task<List<ConsultationRequest?>> FacultyConsultation(int id);
+        Task<Faculty> GetFacultyInformation(string studentUMNumber);
     }
 }

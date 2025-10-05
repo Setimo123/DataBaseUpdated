@@ -17,6 +17,8 @@ namespace Consultation.Domain
   
         public string FacultyName { get; set; }
 
+        public string FacultyEmail { get; set; }
+
         public virtual Users Users { get; set; }
 
         [ForeignKey(nameof(Users))]

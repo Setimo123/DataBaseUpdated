@@ -108,7 +108,7 @@ namespace Consultation.Infrastructure.Data
         }
 
         public static Faculty FacultySeeder(int facultyID,string facultyUMID,string facultyName
-            ,int schoolYearID,string userID)
+            ,int schoolYearID,string userID,string FacultyEmail)
         {
             var faculty = new Faculty
             {
@@ -117,6 +117,7 @@ namespace Consultation.Infrastructure.Data
                 FacultyUMID = facultyUMID,
                 FacultyName = facultyName,   
                 SchoolYearID = schoolYearID,
+                FacultyEmail = FacultyEmail 
 
             };
             return faculty;

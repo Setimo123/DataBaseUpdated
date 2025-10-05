@@ -14,14 +14,18 @@ namespace Consultation.Service
     {
         private readonly IAuthRepository _userRepository;
         private readonly PasswordHasher<Users> _passwordHasher;
+        private readonly UserManager<Users> _userManager;
+        private readonly AppDbContext _appDbContext;
         private Users? user;
         public string AdminUserID { get; set; }
       
 
         public AuthService(AppDbContext context)
         {
+            _appDbContext = context;
             _passwordHasher = new PasswordHasher<Users>();
             _userRepository = new UserRepository(context);
+            //_userManager = userManager UserManager<Users> userManager;
 
         }
 
@@ -47,10 +51,47 @@ namespace Consultation.Service
            return result == Microsoft.AspNetCore.Identity.PasswordVerificationResult.Success ? user : null;
         }
 
-        //This is for mobile, to get the needed student information
-        public async Task<Student?> GetStudentInformation(string studentUMID)
+        public Task<Users?> CreateAccount(string email, string password, UserType role, string name, string phonenumber = "")
         {
-            return await _userRepository.GetStudentInformation(studentUMID);
-        }   
+            switch (role)
+            {
+                case UserType.Student:
+                    return InformationFillup(_appDbContext, email, password, name, role, phonenumber);
+                case UserType.Faculty:
+                    return InformationFillup(_appDbContext, email, password, name, role, phonenumber);
+                default:
+                    return null;
+            }
+        }
+
+        private async Task<Users?> InformationFillup(AppDbContext db, string email, string password, string name, UserType role, string phonenumber)
+        {
+
+            var createaccount = new Users
+            {
+                Email = email,
+                Id = Guid.NewGuid().ToString(),
+                UserName = name,
+                NormalizedEmail = name.ToUpper(),
+                PhoneNumber = phonenumber,
+                PhoneNumberConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+                TwoFactorEnabled = false,
+                EmailConfirmed = true,
+                UMID = name.Split('@')[0].Split('.')[2],
+                LockoutEnd = null,
+                AccessFailedCount = 0,
+                LockoutEnabled = false,
+                NormalizedUserName = name.ToUpper(),
+                UserType = role,
+                PasswordHash = password,
+
+            };
+
+            var result = await _userManager.CreateAsync(createaccount);
+
+            return result.Succeeded ? user : null;
+        }
     }
 }

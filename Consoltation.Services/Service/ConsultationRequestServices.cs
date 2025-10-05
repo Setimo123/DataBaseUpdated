@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Consultation.Repository;
 using Consultation.Repository.IRepository;
 using Consultation.Repository.Repository.IRepository;
+using Consultation.Services.Service.IService;
+using Consultation.Repository.Repository;
 
 namespace Consultation.Service
 {
@@ -19,10 +21,12 @@ namespace Consultation.Service
     {
         private readonly IConsultationRequestRepository _repository;
         private readonly IAuthRepository _userRepository;
+        private readonly IStudentRepository _studentServices;
         public ConsultationRequestServices(AppDbContext context)
         {
             _repository = new ConsultationRequestRepository(context);
             _userRepository = new UserRepository(context);
+            _studentServices = new StudentRepository(context);
         }
         //Desktop Services
         //Getting the total list by int which one number
@@ -113,11 +117,11 @@ namespace Consultation.Service
         //For mobile display the number of the consultations
 
         private string message = "";
-        public async Task<List<ConsultationRequest>> GetStudentPendingList(string studentUMID,Status status)
+        public async Task<List<ConsultationRequest>> GetStudentPendingList(string studentUMID, Status status)
         {
             try
             {
-                var studentConsultation = await _userRepository.GetStudentInformation(studentUMID);
+                var studentConsultation = await _studentServices.GetStudentInformation(studentUMID);
 
 
                 if (studentConsultation == null || studentConsultation.ConsultationRequests == null)
@@ -138,6 +142,6 @@ namespace Consultation.Service
             }
         }
 
-      
+
     }
 }

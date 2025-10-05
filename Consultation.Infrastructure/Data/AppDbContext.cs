@@ -27,27 +27,14 @@ namespace Consultation.Infrastructure.Data
               
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //Connection to Azure SQL Server Database
-            optionsBuilder.UseSqlServer("Server=tcp:consultationserver.database.windows.net,1433;" +
-                "Initial Catalog=ConsultationDatabase;" +
-                "Persist Security Info=False;" +
-                "User ID=ConsultationDB;" +
-                "Password=MyServerAdmin123!;" +
-                "MultipleActiveResultSets=False;" +
-                "Encrypt=True;" +
-                "TrustServerCertificate=False;" +
-                "Connection Timeout=30;");
+            var cs = "Server=consultationdb.mysql.database.azure.com;" +
+           "Port=3306;" +
+           "Database=umeca_database;" +
+           "User Id=ConsultationDb;" +
+           "Password=MyServerAdmin123!;" +
+           "SslMode=Required;";
 
-            ////Connection to Local Server Database
-            //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB; " +
-            //    "Initial Catalog = ConsultationDatabase; " +
-            //    "Integrated Security = True; " +
-            //    "Connect Timeout = 30; " +
-            //    "Encrypt = False; " +
-            //    "Trust Server Certificate = False; " +
-            //    "Application Intent = ReadWrite; " +
-            //    "Multi Subnet Failover = False");
-
+            optionsBuilder.UseMySql(cs, new MySqlServerVersion(new Version(8, 0, 36)));
 
             optionsBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
         }

@@ -15,28 +15,6 @@ namespace Consultation.Repository
         public async Task<Users?> GetUserByEmail(string email)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-        }
-
-        //For mobile repository
-        public async Task<Student> GetStudentInformation(string studentUMNumber)
-        {
-            try
-            {
-                var students = _context.Students
-                       .Include(s => s.SchoolYear)
-                       .ThenInclude(s => s.EnrolledCourses)
-                       .Include(s => s.ConsultationRequests)
-                       .Include(s => s.Program)
-                       .Where(s => s.StudentUMID == studentUMNumber)
-                       .FirstOrDefaultAsync();
-                return await students;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Student Repository Error: {ex.Message}");
-                return new Student();
-            }
-
-        }
+        }  
     }
 }
