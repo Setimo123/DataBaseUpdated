@@ -12,7 +12,10 @@ namespace Consultation.Domain
     public class ActionLog
     {
         [Key]
-        public int ActionLogID { get; set; }
+        public int ActionLogID { get; set; } 
+
+        //Add username of the account
+        public string Username { get; set; }
 
         public string Description { get; set; }
 

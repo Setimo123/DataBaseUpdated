@@ -108,8 +108,8 @@ namespace Consultation.Infrastructure.Data
 
             var faculty = new List<Faculty>()
             {
-                DatabaseSeeder.FacultySeeder(1, "321033", "Rey Mateo", 1,"53D8F920-EBEC-4DF3-8C53-21F6D123F0D9"),
-                DatabaseSeeder.FacultySeeder(2, "797132", "Jeanelle Labsan",2,"78B4AF2A-672F-43C5-B819-5F0B407B7187"),
+                DatabaseSeeder.FacultySeeder(1, "321033", "Rey Mateo",1,"53D8F920-EBEC-4DF3-8C53-21F6D123F0D9","ReyMateo.550200@umindanao.edu.ph"),
+                DatabaseSeeder.FacultySeeder(2, "797132", "Jeanelle Labsan",2,"78B4AF2A-672F-43C5-B819-5F0B407B7187","JeanelleLabsan.7971@umindanao.edu.ph"),
             };
             return faculty;
         }

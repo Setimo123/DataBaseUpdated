@@ -1,4 +1,5 @@
 ﻿using Consultation.Domain;
+using Consultation.Domain.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ namespace Consultation.Service.IService
     public interface IAuthService
     {
         Task<Users?> Login(string email, string password,string role);
-
-        Task<Student?> GetStudentInformation(string studentUMID);
+        Task<Users?> CreateAccount(string email, string password, UserType role, string name, string phonenumber = "");
     }
+
+
 }
