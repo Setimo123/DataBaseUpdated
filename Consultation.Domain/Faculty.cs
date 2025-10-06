@@ -38,6 +38,10 @@ namespace Consultation.Domain
         [ForeignKey(nameof(SchoolYear))]
         public int SchoolYearID { get; set; }
 
+        [ForeignKey(nameof(ProgramID))]
+        public int ProgramID { get; set; }
+        public virtual Program Program { get; set; }
+
 
     }
 }

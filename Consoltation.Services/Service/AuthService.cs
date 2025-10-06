@@ -28,8 +28,6 @@ namespace Consultation.Service
             //_userManager = userManager UserManager<Users> userManager;
 
         }
-
-        //This authenticate user account
         public async Task<Users?> Login(string email, string password,string role)
         {
             user = await _userRepository.GetUserByEmail(email);

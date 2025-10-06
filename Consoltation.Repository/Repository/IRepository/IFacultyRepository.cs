@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace Consultation.Repository.Repository.IRepository
 {
-    public interface IFacultyServices
+    public interface IFacultyRepository
     {
         Task<List<ConsultationRequest?>> FacultyConsultation(int id);
         Task<Faculty> GetFacultyInformation(string studentUMNumber);
+        Task ChangeConsultationByID(int id, Consultation.Domain.Enum.Status status,string reason);
+
+
     }
 }

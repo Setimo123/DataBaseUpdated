@@ -108,8 +108,8 @@ namespace Consultation.Infrastructure.Data
 
             var faculty = new List<Faculty>()
             {
-                DatabaseSeeder.FacultySeeder(1, "321033", "Rey Mateo",1,"53D8F920-EBEC-4DF3-8C53-21F6D123F0D9","ReyMateo.550200@umindanao.edu.ph"),
-                DatabaseSeeder.FacultySeeder(2, "797132", "Jeanelle Labsan",2,"78B4AF2A-672F-43C5-B819-5F0B407B7187","JeanelleLabsan.7971@umindanao.edu.ph"),
+                DatabaseSeeder.FacultySeeder(1, "321033", "Rey Mateo",1,"53D8F920-EBEC-4DF3-8C53-21F6D123F0D9","ReyMateo.550200@umindanao.edu.ph",2),
+                DatabaseSeeder.FacultySeeder(2, "797132", "Jeanelle Labsan",2,"78B4AF2A-672F-43C5-B819-5F0B407B7187","JeanelleLabsan.7971@umindanao.edu.ph",5),
             };
             return faculty;
         }
@@ -156,7 +156,7 @@ namespace Consultation.Infrastructure.Data
                     new TimeOnly(14, 30),
                     "Need help with data structures",
                     null,
-                    "CS202",
+                    "CPE221/L",
                     Status.Pending,
                     "CPE",
                     2,
@@ -170,8 +170,22 @@ namespace Consultation.Infrastructure.Data
                     new TimeOnly(16, 0),
                     "Follow-up on previous consultation",
                     "Faculty unavailable",
-                    "PHY303",
+                    "CPE 317/L",
                     Status.Disapproved,
+                    "CE",
+                    1,
+                    2
+                ),
+                     DatabaseSeeder.ConsultationRequestSeeder(
+                    4,
+                    new DateTime(2025, 07, 19),
+                    new DateTime(2025, 07, 28),
+                    new TimeOnly(16, 0),
+                    new TimeOnly(17, 0),
+                    "Follow-up on previous consultation",
+                    null,
+                    "CCPE 315/L",
+                    Status.Upcoming,
                     "CE",
                     1,
                     2

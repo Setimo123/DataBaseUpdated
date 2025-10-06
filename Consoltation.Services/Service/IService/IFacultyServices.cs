@@ -12,5 +12,7 @@ namespace Consultation.Services.Service.IService
         Task<List<ConsultationRequest?>> GetFacultyConsultation(int id);
 
         Task<Faculty?> GetFacultyInformation(string faucltyUMID);
+
+        Task ChagngConsultationByID(int id, Consultation.Domain.Enum.Status status, string reason);
     }
 }

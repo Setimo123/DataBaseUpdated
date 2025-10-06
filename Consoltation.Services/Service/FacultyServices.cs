@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Consultation.Services.Service
 {
-    public class FacultyServices : IService.IFacultyServices
+    public class FacultyServices : IFacultyServices
     {
-        private readonly Repository.Repository.IRepository.IFacultyServices _facultyRepository;
+        private readonly IFacultyRepository _facultyRepository;
 
-        public FacultyServices(Repository.Repository.IRepository.IFacultyServices studentRepository)
+        public FacultyServices(IFacultyRepository studentRepository)
         {
             _facultyRepository = studentRepository;
         }
@@ -25,6 +25,11 @@ namespace Consultation.Services.Service
         public Task<Faculty?> GetFacultyInformation(string faucltyUMID)
         {
             return _facultyRepository.GetFacultyInformation(faucltyUMID);   
+        }
+
+        public async Task ChagngConsultationByID(int id,Consultation.Domain.Enum.Status status, string reason)
+        {
+             await _facultyRepository.ChangeConsultationByID(id,status, reason);
         }
     }
 }

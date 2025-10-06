@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Consultation.Repository.Repository
 {
-    public class FacultyRepository : IFacultyServices
+    public class FacultyRepository : IFacultyRepository
     {
         private readonly AppDbContext _context;
 
@@ -19,9 +19,25 @@ namespace Consultation.Repository.Repository
         {
             var consultation = await _context.ConsultationRequest.Include(cr => cr.Faculty)
                 .Where(f => f.FacultyID == id)
+                .Include(s => s.Student)
                 .ToListAsync();
 
             return consultation;
+        }
+
+        public async Task ChangeConsultationByID(int id,Consultation.Domain.Enum.Status status,string reason)
+        {
+
+            var consultation = await _context.ConsultationRequest
+                .FirstOrDefaultAsync(c => c.ConsultationID == id) ?? new ConsultationRequest();
+
+                  if (consultation == null)
+                 {
+                     return;
+                 }
+                consultation.DisapprovedReason = reason;
+                consultation.Status = status;
+                await _context.SaveChangesAsync();
         }
 
         public async Task<Faculty> GetFacultyInformation(string faucltyUMID)
@@ -32,6 +48,7 @@ namespace Consultation.Repository.Repository
                        .Include(f => f.SchoolYear)
                        .ThenInclude(f => f.EnrolledCourses)
                        .Include(f => f.ConsultationRequests)
+                       .Include(f => f.Program)
                        .FirstOrDefaultAsync(f => f.FacultyUMID == faucltyUMID);
                 return await faculty ?? new Faculty();
             }

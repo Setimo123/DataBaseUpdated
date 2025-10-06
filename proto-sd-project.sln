@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consultation.Services", "Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consultation.Testing", "Consultation.Testing\Consultation.Testing.csproj", "{C811F79D-58C5-4858-BAFB-020935E48D8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UM-Consultation-App-MAUI", "..\MobilePrototype_Github\UM-Consultation-App-MAUI.csproj", "{CC15E6AC-92E1-D079-F745-71C58E8A42D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,12 @@ Global
 		{C811F79D-58C5-4858-BAFB-020935E48D8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C811F79D-58C5-4858-BAFB-020935E48D8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C811F79D-58C5-4858-BAFB-020935E48D8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC15E6AC-92E1-D079-F745-71C58E8A42D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC15E6AC-92E1-D079-F745-71C58E8A42D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC15E6AC-92E1-D079-F745-71C58E8A42D4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{CC15E6AC-92E1-D079-F745-71C58E8A42D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC15E6AC-92E1-D079-F745-71C58E8A42D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC15E6AC-92E1-D079-F745-71C58E8A42D4}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
