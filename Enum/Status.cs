@@ -12,7 +12,6 @@ namespace Consultation.Domain.Enum
         Approved = 2,
         Disapproved = 3,
         Cancelled = 4,
-        Done = 5,
-        Upcoming = 6,
+        Done = 5
     }
 }
